@@ -39,13 +39,13 @@ export default class NewClass extends cc.Component {
     // 添加类别
     addCategory(){
 
+
+        //  淡出动画按钮
         let actionoutNode = new cc.Node()
-        
-
+    
         actionoutNode.position = cc.v2(0,-20)
-        actionoutNode.addComponent(cc.Button)
-
         
+        actionoutNode.addComponent(cc.Button)
         actionoutNode.addComponent(cc.Label)
         actionoutNode.addComponent(cc.LabelOutline)
         actionoutNode.getComponent(cc.Label).useSystemFont = true
@@ -58,20 +58,28 @@ export default class NewClass extends cc.Component {
        this.addEventMethod(actionoutNode.getComponent(cc.Button),'easeActionOut')
 
 
-        let a =  actionoutNode.getComponent(cc.Button).getComponent(cc.Label)
-        a.string = 'is a string'
+       // 跳跃动画按钮
+       let actionjumpNode = new cc.Node()
+    
+        actionjumpNode.position = cc.v2(0,-60)
+        actionjumpNode.addComponent(cc.Button)
+        actionjumpNode.addComponent(cc.Label)
+        actionjumpNode.addComponent(cc.LabelOutline)
+        actionjumpNode.getComponent(cc.Label).useSystemFont = true
+        actionjumpNode.getComponent(cc.Label).string = 'jumpAction'
+        actionjumpNode.getComponent(cc.Label).fontSize = 20
+        actionjumpNode.getComponent(cc.LabelOutline).color = cc.Color.BLACK
+        this.scrollView.content.addChild(actionjumpNode)
 
-        if(a == null){
+        this.addEventMethod(actionjumpNode.getComponent(cc.Button),'jump')
+    }
+    // 跳跃
+    jump(event,customEventData){
 
-            console.log('a is a null')
-
-        }else{
-
-            console.log('a is not null')
-        }
-
+        this.queen.runAction(cc.jumpTo(1,cc.v2(200,200),20,2).easing(cc.easeBackInOut()))
 
     }
+    // 淡出
     easeActionOut(event, customEventData){
 
         this.queen.runAction(cc.moveTo(1.2,cc.v2(100,100)).easing(cc.easeCircleActionOut()))
@@ -83,7 +91,7 @@ export default class NewClass extends cc.Component {
         eventAction.target = this.node
         eventAction.component = 'game'
         eventAction.handler =  callFunc
-        eventAction.customEventData = callFunc.toString()
+        eventAction.customEventData = callFunc
 
         button.clickEvents.push(eventAction)
 
